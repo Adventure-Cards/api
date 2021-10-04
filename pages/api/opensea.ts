@@ -3,7 +3,8 @@ import pino from 'pino'
 
 
 type Data = {
-  token_ids: string | string[]
+  response: any,
+  err?: any
 }
 
 const OPEN_SEA_BASE_URL = 'https://api.opensea.io/api/v1/assets?collection=adventure-cards&'
@@ -26,7 +27,7 @@ export default async function handler(
     logger.info(response);
     return res.status(200).json({ ...response })
   } catch (err) {
-    logger.error(err);
-    return res.status(501).json({ ...err })
+    logger.error({ msg: 'err', err });
+    return res.status(501).json({ response: 'err', err })
   }
 }
